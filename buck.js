@@ -1,7 +1,7 @@
+'use strict'
 const paths = require('path')
 const ops = require('./ops')
 const mvn = require('./mvn')
-const sums = require('./sums')
 
 class Target {
   constructor(path, goal) {
@@ -18,7 +18,7 @@ class Target {
   }
 
   get isDefault() {
-    return this.basename == this.goal
+    return this.basename === this.goal
   }
 
   get isLocal() {
@@ -111,7 +111,6 @@ function ruleJavaAnnotationProcessor(t, jars, options) {
   let deps = jars.map(j => `':${flatname(j)}'`)
       .concat((options.deps || []).map(target).map(d => `'${d}'`))
 
-  let processorLibrary = ''
   if (options.processorLibrary) {
     return `
 java_library(
@@ -155,7 +154,7 @@ function query(input, attrs) {
 let cachedInfo = {}
 
 function dropCache() {
-  cachedTargets = {}
+  cachedInfo = {}
 }
 
 function info(pattern) {
@@ -165,7 +164,7 @@ function info(pattern) {
 }
 
 function fetchAll() {
-  ops.exec(`buck fetch //...`)
+  ops.exec('buck fetch //...')
 }
 
 const remote = {
